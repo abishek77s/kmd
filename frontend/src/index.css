@@ -1,0 +1,7 @@
+@import "tailwindcss";
+
+/* Define alias in Tailwind theme */
+@theme {
+    --font-sf: "SF New Republic", sans-serif;
+    --font-sf-sc: "SF New Republic SC", sans-serif;
+}
