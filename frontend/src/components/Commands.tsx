@@ -8,7 +8,8 @@ import {
 const Commands = () => {
     const [cmd, setCmd] = useState<CommandsType>({
         id: "",
-        cmds: [{ name: "", description: "" }],
+        name: "",
+        commands: [{ name: "", description: "" }],
     });
 
     const [generatedId, setGeneratedId] = useState("");
@@ -33,7 +34,7 @@ const Commands = () => {
         e.preventDefault();
         try {
             const id =
-                cmd.id + "-" + Math.floor(Math.random() * 1000).toString();
+                cmd.name + "-" + Math.floor(Math.random() * 1000).toString();
             const postedData = await postCommands({ ...cmd, id });
             setGeneratedId(id);
 
@@ -56,9 +57,9 @@ const Commands = () => {
         value: string,
     ) => {
         setCmd((prev) => {
-            const newCmds = [...prev.cmds];
+            const newCmds = [...prev.commands];
             newCmds[index] = { ...newCmds[index], [field]: value };
-            return { ...prev, cmds: newCmds };
+            return { ...prev, commands: newCmds };
         });
     };
 
@@ -101,16 +102,16 @@ const Commands = () => {
                             className="bg-zinc-300 p-2"
                             type="text"
                             placeholder="File name"
-                            value={cmd.id}
+                            value={cmd.name}
                             onChange={(e) =>
                                 setCmd((prev) => ({
                                     ...prev,
-                                    id: e.target.value,
+                                    name: e.target.value,
                                 }))
                             }
                         />
 
-                        {cmd.cmds.map((c, index) => (
+                        {cmd.commands.map((c, index) => (
                             <div key={index} className="flex space-x-2">
                                 <input
                                     className="flex-1 p-2"
@@ -179,8 +180,8 @@ const Commands = () => {
 
                         {data && (
                             <>
-                                <h1>ID: {data.id}</h1>
-                                {data.cmds.map((c, index) => (
+                                <h1>{data.name}</h1>
+                                {data.commands.map((c, index) => (
                                     <div key={index}>
                                         <p>{c.name}</p>
                                         <p>{c.description}</p>

@@ -34,7 +34,8 @@ func withLogging(next http.Handler) http.Handler {
 
 func main() {
 	mux := http.NewServeMux()
-
+	api.InitDB()
+	defer api.DB.Close()
 	mux.HandleFunc("POST /commands", api.StoreCommandsHandler)
 	mux.HandleFunc("POST /file", api.StoreFileHandler)
 	mux.HandleFunc("GET /commands/{id}", api.GetCommandsHandler)

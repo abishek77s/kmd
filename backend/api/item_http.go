@@ -21,26 +21,26 @@ func StoreCommandsHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Invalid JSON", http.StatusBadRequest)
 		return
 	}
-
 	if cmd.ID == "" {
 		http.Error(w, "ID is required", http.StatusBadRequest)
 		return
 	}
 
-	mu.Lock()
-	cacheStore[cmd.ID] = item.CacheItem{
-		Command:    &cmd,
-		Expiration: time.Now().Add(ttl).UnixNano(),
+	_, err := DB.Exec(r.Context(),
+		`INSERT INTO commands (id, data)
+         VALUES ($1, $2)
+         ON CONFLICT (id) DO UPDATE SET data = EXCLUDED.data`,
+		cmd.ID, cmd)
+	if err != nil {
+		http.Error(w, "DB insert failed: "+err.Error(), http.StatusInternalServerError)
+		return
 	}
-	mu.Unlock()
 
 	w.WriteHeader(http.StatusCreated)
-	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(map[string]string{
 		"message": "Stored command successfully",
 		"id":      cmd.ID,
 	})
-
 }
 
 func GetCommandsHandler(w http.ResponseWriter, r *http.Request) {
@@ -50,17 +50,23 @@ func GetCommandsHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	mu.RLock()
-	item, found := cacheStore[id]
-	mu.RUnlock()
+	var data []byte
 
-	if !found || time.Now().UnixNano() > item.Expiration {
-		http.Error(w, "Not found or expired", http.StatusNotFound)
+	err := DB.QueryRow(r.Context(),
+		`SELECT data FROM commands WHERE id=$1`, id).Scan(&data)
+	if err != nil {
+		http.Error(w, "Not found", http.StatusNotFound)
+		return
+	}
+
+	var cmd item.Command
+	if err := json.Unmarshal(data, &cmd); err != nil {
+		http.Error(w, "Invalid stored data", http.StatusInternalServerError)
 		return
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(item.Command)
+	json.NewEncoder(w).Encode(cmd)
 }
 
 func GetFileHandler(w http.ResponseWriter, r *http.Request) {

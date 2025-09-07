@@ -5,7 +5,8 @@ export interface Command {
 
 export interface CommandsType {
     id: string;
-    cmds: Command[];
+    name: string;
+    commands: Command[];
 }
 
 const BASE_URL = "https://kmd-backend.onrender.com/commands";
