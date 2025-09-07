@@ -66,7 +66,7 @@ const Commands = () => {
     const addCommand = () => {
         setCmd((prev) => ({
             ...prev,
-            cmds: [...prev.cmds, { name: "", description: "" }],
+            commands: [...prev.commands, { name: "", description: "" }],
         }));
     };
 
