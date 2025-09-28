@@ -80,16 +80,16 @@ const File = () => {
                                 }))
                             }
                         />
-                        <input
-                            className="h-full"
+                        <textarea
+                            className="h-full w-full p-2 border rounded"
                             onChange={(e) =>
                                 setFile((prev) => ({
                                     ...prev,
                                     content: e.target.value,
                                 }))
                             }
-                            type="text"
-                            placeholder="Content"
+                            placeholder="Paste your code here..."
+                            value={file.content}
                         />
                         {generatedId && <h1> {generatedId}</h1>}
                         <button
@@ -121,7 +121,9 @@ const File = () => {
                         </button>
                         {loading && <p> Loading...</p>}
                         <h1>{data?.name}</h1>
-                        <p>{data?.content}</p>
+                        <pre className="whitespace-pre-wrap">
+                            <code>{data?.content}</code>
+                        </pre>
                     </div>
                 )}
             </div>
