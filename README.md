@@ -1,6 +1,6 @@
 # kmd
 
-Turn your shell history into a Makefile.
+Turn your recently used commands (usually repeated) into a Makefile.
 
 ## Install
 
