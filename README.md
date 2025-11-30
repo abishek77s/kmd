@@ -4,14 +4,31 @@ Turn your recently used commands (usually repeated) into a Makefile.
 
 ## Install
 
-Download the binary:
+Download the appropriate Linux binary from the **Releases** page:
+
+### Linux (amd64)
 ```bash
-curl -L https://github.com/abishek77s/kmd/raw/main/kmd -o kmd
+curl -L https://github.com/abishek77s/kmd/releases/latest/download/kmd_0.1.0-alpha_linux_amd64.tar.gz -o kmd.tar.gz
+```
+
+### Linux (arm64)
+```bash
+curl -L https://github.com/abishek77s/kmd/releases/latest/download/kmd_0.1.0-alpha_linux_arm64.tar.gz -o kmd.tar.gz
+```
+
+### Extract & Install
+```bash
+tar -xzf kmd.tar.gz
 chmod +x kmd
 sudo mv kmd /usr/local/bin/
 ```
 
-Or build from source:
+### Verify
+```bash
+kmd --version
+```
+
+### Build from source
 ```bash
 git clone https://github.com/abishek77s/kmd.git
 cd kmd/cli
@@ -27,16 +44,17 @@ go build
 ## Usage
 
 ```bash
-kmd              # Show last 5 commands
-kmd -n 7        # Show last 7 commands
+kmd            # Show last 5 commands
+kmd -n 7       # Show last 7 commands
 ```
-
 
 ## What it does
 
-1. Reads your shell history (bash/zsh/fish)
-2. Lets you select commands in order
-3. Generates a Makefile with numbered steps
+1. Reads your shell history (bash/zsh/fish)  
+2. Lets you select commands in order  
+3. Generates a Makefile with numbered steps  
+
+### Example Output
 
 ```makefile
 all: step1 step2 step3 step4
@@ -58,4 +76,11 @@ step4:
 	docker push 123456789.dkr.ecr.us-east-1.amazonaws.com/myapp:latest
 ```
 
-Run with `make all` or `make step1`, `make step2`, etc.
+Run using:
+
+```bash
+make all
+# or individually
+make step1
+make step2
+```
