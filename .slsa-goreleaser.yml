@@ -1,8 +1,16 @@
 version: 1
-
 builds:
     - id: kmd
       main: ./cli
       binary: kmd
-      goos: [linux]
-      goarch: [amd64]
+      goos:
+          - linux
+      goarch:
+          - amd64
+          - arm64 # Add this for ARM support
+      env:
+          - CGO_ENABLED=0
+      flags:
+          - -trimpath
+      ldflags:
+          - "-s -w"
