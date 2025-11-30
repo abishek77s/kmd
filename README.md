@@ -4,16 +4,14 @@ Turn your recently used commands (usually repeated) into a Makefile.
 
 ## Install
 
-Download the appropriate Linux binary from the **Releases** page:
+Download the appropriate Linux/MacOS binary from the **Releases** page:
 
 ### Linux (amd64)
 ```bash
-curl -L https://github.com/abishek77s/kmd/releases/latest/download/kmd_0.1.0-alpha_linux_amd64.tar.gz -o kmd.tar.gz
-```
-
-### Linux (arm64)
-```bash
-curl -L https://github.com/abishek77s/kmd/releases/latest/download/kmd_0.1.0-alpha_linux_arm64.tar.gz -o kmd.tar.gz
+curl -L -o kmd.tar.gz https://github.com/abishek77s/kmd/releases/download/v0.1.0-alpha/kmd_0.1.0-alpha_linux_amd64.tar.gz && \
+tar -xzf kmd.tar.gz && \
+chmod +x kmd && \
+sudo mv kmd /usr/local/bin/
 ```
 
 ### Extract & Install
@@ -21,11 +19,6 @@ curl -L https://github.com/abishek77s/kmd/releases/latest/download/kmd_0.1.0-alp
 tar -xzf kmd.tar.gz
 chmod +x kmd
 sudo mv kmd /usr/local/bin/
-```
-
-### Verify
-```bash
-kmd --version
 ```
 
 ### Build from source
