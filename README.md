@@ -14,13 +14,6 @@ chmod +x kmd && \
 sudo mv kmd /usr/local/bin/
 ```
 
-### Extract & Install
-```bash
-tar -xzf kmd.tar.gz
-chmod +x kmd
-sudo mv kmd /usr/local/bin/
-```
-
 ### Build from source
 ```bash
 git clone https://github.com/abishek77s/kmd.git
