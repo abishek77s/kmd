@@ -2,7 +2,7 @@ version: 1
 
 before:
     hooks:
-        - go mod tidy
+        - cd ./cli && go mod tidy
 
 builds:
     - id: kmd
@@ -29,7 +29,6 @@ archives:
           - LICENSE*
           - README*
 
-# Upload raw binaries as well
 release:
     github:
         owner: abishek77s
